@@ -73,8 +73,13 @@ class MessageHandler {
   }
 
   shouldBroadcastMessage(message) {
-    return !message.author.bot && message.channel.id == this.discord.app.config.discord.channel && message.content && message.content.length > 0
+    const botId = this.discord.app.config.discord.botId; // Get botId from config
+    return (
+      (message.channel.id == this.discord.app.config.discord.channel &&
+      message.content &&
+      message.content.length > 0) &&
+      (!message.author.bot || message.author.id === botId)
+    );
   }
-}
 
 module.exports = MessageHandler
